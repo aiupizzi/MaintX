@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.maintx.data.MaintXDatabase
 import com.maintx.data.MaintenanceDao
+import com.maintx.data.local.room.DiagnosticsDao
 import com.maintx.data.local.room.FleetMaintenanceDao
 import com.maintx.data.local.room.RoomMigrations
 import dagger.Module
@@ -33,4 +34,7 @@ object DataModule {
 
     @Provides
     fun provideFleetMaintenanceDao(database: MaintXDatabase): FleetMaintenanceDao = database.fleetMaintenanceDao()
+
+    @Provides
+    fun provideDiagnosticsDao(database: MaintXDatabase): DiagnosticsDao = database.diagnosticsDao()
 }
