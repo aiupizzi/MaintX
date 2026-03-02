@@ -56,5 +56,24 @@ object RoomMigrations {
         }
     }
 
-    val ALL = arrayOf(MIGRATION_1_2)
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `vibration_samples` (
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    `timestampEpochMillis` INTEGER NOT NULL,
+                    `x` REAL NOT NULL,
+                    `y` REAL NOT NULL,
+                    `z` REAL NOT NULL
+                )
+                """.trimIndent()
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_vibration_samples_timestampEpochMillis` ON `vibration_samples` (`timestampEpochMillis`)"
+            )
+        }
+    }
+
+    val ALL = arrayOf(MIGRATION_1_2, MIGRATION_2_3)
 }
